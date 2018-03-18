@@ -1,4 +1,17 @@
-%p#notice= notice
-= link_to 'Edit', edit_page_path(@page)
-|
-= link_to 'Back', pages_path
+%h1 Teste
+%ul
+  - product = ScrapeService.search_by_ean(params[:ean])
+  %li
+    %h3= product[:name]
+    %ul
+      - if product[:composition]
+        - product[:composition].each do |e|
+          %li= e
+
+  -# = ScrapeService.search_by_name('Creme de Pentear Garnier Fructis Cachos Poderosos').each do |product|
+  -#   %li
+  -#     %h3= product[:name]
+  -#     %ul
+  -#       - if product[:composition]
+  -#         - product[:composition].each do |e|
+  -#           %li= e

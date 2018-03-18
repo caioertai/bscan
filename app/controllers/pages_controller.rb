@@ -1,74 +1,52 @@
+require 'nokogiri'
+require 'open-uri'
+# require_relative '../services/scrape'
+
 class PagesController < ApplicationController
-  # before_action :set_page, only: [:show, :edit, :update, :destroy]
-  #
-  # # GET /pages
-  # # GET /pages.json
-  # def index
-  #   @pages = Page.all
-  # end
-  #
-  # # GET /pages/1
-  # # GET /pages/1.json
-  # def show
-  # end
-  #
-  # # GET /pages/new
-  # def new
-  #   @page = Page.new
-  # end
-  #
-  # # GET /pages/1/edit
-  # def edit
-  # end
-  #
-  # # POST /pages
-  # # POST /pages.json
-  # def create
-  #   @page = Page.new(page_params)
-  #
-  #   respond_to do |format|
-  #     if @page.save
-  #       format.html { redirect_to @page, notice: 'Page was successfully created.' }
-  #       format.json { render :show, status: :created, location: @page }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @page.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  #
-  # # PATCH/PUT /pages/1
-  # # PATCH/PUT /pages/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @page.update(page_params)
-  #       format.html { redirect_to @page, notice: 'Page was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @page }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @page.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  #
-  # # DELETE /pages/1
-  # # DELETE /pages/1.json
-  # def destroy
-  #   @page.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to pages_url, notice: 'Page was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
-  #
-  # private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_page
-  #     @page = Page.find(params[:id])
-  #   end
-  #
-  #   # Never trust parameters from the scary internet, only allow the white list through.
-  #   def page_params
-  #     params.fetch(:page, {})
-  #   end
+  def home
+  end
+end
+
+# Service object
+class ScrapeService
+  def self.search(search, url = "https://consultaremedios.com.br")
+    @url = "https://consultaremedios.com.br"
+    search_by_name(search)
+  end
+
+  def self.get_page(url)
+    Nokogiri::HTML(open(url), nil, Encoding::UTF_8.to_s)
+  end
+
+  def self.search_by_name(product_name)
+    @url = "https://consultaremedios.com.br"
+    product_name = product_name.downcase.gsub(' ', '+')
+    doc = get_page(@url + "/busca?termo=" + product_name)
+
+    doc.search('.product-block__title a').map do |e|
+      get_info(@url + e.attr('href'))
+    end
+  end
+
+  def self.search_by_ean(product_ean)
+    # @url = "https://consultaremedios.com.br"
+    # doc = get_page("https://consultaremedios.com.br/busca?termo=" + product_ean.to_s)
+    # product_name = doc.search('h1.page-header').text.strip.match(/\A(.+)$/)[1]
+    # product_url = '/' + product_name.parameterize.downcase.gsub(' ', '-') + '/p'
+
+    get_info("https://consultaremedios.com.br/busca?termo=" + product_ean.to_s)
+  end
+
+  def self.get_info(product_url)
+    doc = get_page(product_url)
+    info = {}
+    info[:name] = doc.search('.product-header__title').text
+
+    if doc.search('hr')[0]
+      info[:composition] = doc.search('hr')[0].next_element.next_element.text.split(', ')
+    else
+      info[:composition] = ['Composição indisponível']
+    end
+    info
+  end
 end
