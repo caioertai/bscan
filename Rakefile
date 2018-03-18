@@ -3,4 +3,11 @@
 
 require_relative 'config/application'
 
+task :console do
+  require 'rubygems'
+  require 'pry'
+
+  Pry.start
+end
+
 Rails.application.load_tasks
