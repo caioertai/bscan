@@ -9,11 +9,6 @@ end
 
 # Service object
 class ScrapeService
-  def self.search(search, url = "https://consultaremedios.com.br")
-    @url = "https://consultaremedios.com.br"
-    search_by_name(search)
-  end
-
   def self.get_page(url)
     Nokogiri::HTML(open(url), nil, Encoding::UTF_8.to_s)
   end
@@ -29,24 +24,25 @@ class ScrapeService
   end
 
   def self.search_by_ean(product_ean)
-    # @url = "https://consultaremedios.com.br"
-    # doc = get_page("https://consultaremedios.com.br/busca?termo=" + product_ean.to_s)
-    # product_name = doc.search('h1.page-header').text.strip.match(/\A(.+)$/)[1]
-    # product_url = '/' + product_name.parameterize.downcase.gsub(' ', '-') + '/p'
-
     get_info("https://consultaremedios.com.br/busca?termo=" + product_ean.to_s)
   end
 
   def self.get_info(product_url)
+    # Gets the HTML
     doc = get_page(product_url)
+
+    # Builds the hash
     info = {}
     info[:name] = doc.search('.product-header__title').text
-
     if doc.search('hr')[0]
       info[:composition] = doc.search('hr')[0].next_element.next_element.text.split(', ')
     else
       info[:composition] = ['Composição indisponível']
     end
+
+    prices = doc.search('.presentation-offer__price-value strong').map { |price| price.text.delete(',').to_i }
+    info[:price] = Money.new(prices.sum / prices.size, 'BRL')
+
     info
   end
 end

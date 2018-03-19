@@ -3,6 +3,7 @@
   - product = ScrapeService.search_by_ean(params[:ean])
   %li
     %h3= product[:name]
+    %h4= product[:price].format
     %ul
       - if product[:composition]
         - product[:composition].each do |e|
