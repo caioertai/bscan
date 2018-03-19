@@ -6,6 +6,7 @@
 # );
 class Ingredient < ApplicationRecord
   validates :name, presence: true
+  validates :name, uniqueness: true
   has_many :product_ingredients
   has_many :products, through: :product_ingredients
 end
