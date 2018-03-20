@@ -18,7 +18,11 @@ class ScrapeService
   end
 
   def self.search_by_ean(product_ean)
-    @product = Product.new
+    # Looks for it on the DB first
+    @product = Product.find_by_ean(product_ean)
+    return @product unless @product.nil?
+
+    # Tries to find online otherwise
     get_info("https://consultaremedios.com.br/busca?termo=" + product_ean.to_s)
   end
 
@@ -26,8 +30,16 @@ class ScrapeService
     # Gets the HTML
     doc = get_page(product_url)
 
-    # Builds the product
+    ### Builds the product
+    @product = Product.new
+  
+    # Name
     @product.name = doc.search('.product-header__title').text
+
+    # EAN
+    @product.ean = doc.search('.presentation-offer-info__ean strong').first.text.to_i
+
+    # Composition
     if doc.search('hr').first
       doc.search('hr').first.next_element.next_element.text.split(', ').each_with_index do |ingredient, index|
         product_ingredient = ProductIngredient.new(composition_index: index)
@@ -37,9 +49,12 @@ class ScrapeService
       end
     end
 
+    # Price
     prices = doc.search('.presentation-offer__price-value strong').map { |price| price.text.delete(',').to_i }
     @product.price = prices.sum / prices.size
 
+    # Returns and saves result on DB
+    @product.save
     @product
   end
 end
