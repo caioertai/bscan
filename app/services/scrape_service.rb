@@ -42,12 +42,20 @@ class ScrapeService
     # Composition
     if doc.search('hr').first
       doc.search('hr').first.next_element.next_element.text.split(', ').each_with_index do |ingredient_string, index|
-        product_ingredient = ProductIngredient.create(composition_index: index)
+        product_ingredient = ProductIngredient.new(composition_index: index)
         product_ingredient.product = @product
 
         # Uses ingredients from DB or Creates and uses a new ingredient
         ingredient = Ingredient.find_by_name(ingredient_string)
-        product_ingredient.ingredient = ingredient ? ingredient : Ingredient.create(name: ingredient_string)
+        p "==========="
+        p ingredient
+        p "==========="
+        if ingredient.nil?
+          product_ingredient.ingredient = Ingredient.create(name: ingredient_string)
+        else
+          product_ingredient.ingredient = ingredient
+        end
+        product_ingredient.save
 
         @product.product_ingredients << product_ingredient
       end
