@@ -45,7 +45,7 @@ class ScrapeService
         product_ingredient = ProductIngredient.create(composition_index: index)
         product_ingredient.product = @product
 
-        # Uses ingredient from DB or Creates and uses a new ingredient
+        # Uses ingredients from DB or Creates and uses a new ingredient
         ingredient = Ingredient.find_by_name(ingredient_string)
         product_ingredient.ingredient = ingredient ? ingredient : Ingredient.create(name: ingredient_string)
 
