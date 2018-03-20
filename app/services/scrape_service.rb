@@ -45,6 +45,13 @@ class ScrapeService
         product_ingredient = ProductIngredient.new(composition_index: index)
         product_ingredient.product = @product
 
+        # Removes trailing dot
+        # TODO: make better parsing methods.
+        # E.g.: "Name1 / Name2" and "Name1/Name2" to "Name1 / Name2"
+        # E.g.: "Aqua" should equal "Aqua / Water"
+        # Maybe create an ingredient aliases column?  
+        ingredient_string = ingredient_string.chomp('.')
+
         # Uses ingredients from DB or Creates and uses a new ingredient
         ingredient = Ingredient.find_by_name(ingredient_string)
         p "==========="
