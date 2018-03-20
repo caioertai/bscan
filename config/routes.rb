@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   get '/search/', to: 'pages#search'
-  # get '/search_by_ean/:ean', to: 'pages#search_by_ean'
   get '/search_by_ean', to: 'pages#search_by_ean'
+  get '/search_by_name', to: 'pages#search_by_name'
 end

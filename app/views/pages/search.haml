@@ -1,11 +1,14 @@
-%h1 Search by EAN
-%form{action: 'post'}
+%h1 Search
 
-
-
+%h2 Search by EAN
 = form_tag "/search_by_ean", method: 'get' do
   = text_field_tag :ean, params[:ean]
   = submit_tag "Search by EAN", name: nil
+
+%h2 Search by name
+= form_tag "/search_by_name", method: 'get' do
+  = text_field_tag :name, params[:name]
+  = submit_tag "Search by name", name: nil
 
 -# = form_for @product do |f|
 -#   - if @product.errors.any?

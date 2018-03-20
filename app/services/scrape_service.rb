@@ -4,13 +4,19 @@ require 'open-uri'
 # Service object
 class ScrapeService
   def self.get_page(url)
+    p "=================================="
+    p url
+    p "=================================="
     Nokogiri::HTML(open(url), nil, Encoding::UTF_8.to_s)
   end
 
   def self.search_by_name(product_name)
     @url = "https://consultaremedios.com.br"
-    product_name = product_name.downcase.gsub(' ', '+')
-    doc = get_page(@url + "/busca?termo=" + product_name)
+
+    # Treats name to use in URL
+    product_slug = I18n.transliterate(product_name.downcase.gsub('+', '%2B').gsub(' ', '+'))
+
+    doc = get_page(@url + "/busca?termo=" + product_slug)
 
     doc.search('.product-block__title a').map do |e|
       get_info(@url + e.attr('href'))
@@ -42,8 +48,7 @@ class ScrapeService
     # Composition
     if doc.search('hr').first
       doc.search('hr').first.next_element.next_element.text.split(', ').each_with_index do |ingredient_string, index|
-        product_ingredient = ProductIngredient.new(composition_index: index)
-        product_ingredient.product = @product
+        product_ingredient = ProductIngredient.new(composition_index: index, product: @product)
 
         # Removes trailing dot
         # TODO: make better parsing methods.
@@ -54,15 +59,15 @@ class ScrapeService
 
         # Uses ingredients from DB or Creates and uses a new ingredient
         ingredient = Ingredient.find_by_name(ingredient_string)
-        p "==========="
-        p ingredient
-        p "==========="
         if ingredient.nil?
+          p "------------------Creating ingredient:----------------------------"
           product_ingredient.ingredient = Ingredient.create(name: ingredient_string)
+          p '---------------------------------------------------------------------------'
         else
           product_ingredient.ingredient = ingredient
         end
         product_ingredient.save
+        p '---------------------------------------------------------------------------'
 
         @product.product_ingredients << product_ingredient
       end
@@ -72,7 +77,9 @@ class ScrapeService
     prices = doc.search('.presentation-offer__price-value strong').map { |price| price.text.delete(',').to_i }
     @product.price = prices.sum / prices.size
 
+    p "------------------Saving product: #{@product}----------------------------"
     # Returns and saves result on DB
+    p "----------------------------------------------"
     @product.save
     @product
   end
