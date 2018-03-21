@@ -1,2 +1,9 @@
 %h1== Searching for name #{params[:name]}
-%h2= @products
+
+- @products.each do |product|
+  %h2= product.name
+  %h3= monetize(product.price)
+  %ul
+    - if product.product_ingredients
+      - product.product_ingredients.each do |product_ingredients|
+        %li== #{product_ingredients.composition_index}. #{product_ingredients.ingredient.name}

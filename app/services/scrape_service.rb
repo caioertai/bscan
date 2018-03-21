@@ -4,9 +4,7 @@ require 'open-uri'
 # Service object
 class ScrapeService
   def self.get_page(url)
-    p "=================================="
     p url
-    p "=================================="
     Nokogiri::HTML(open(url), nil, Encoding::UTF_8.to_s)
   end
 
@@ -19,7 +17,10 @@ class ScrapeService
     doc = get_page(@url + "/busca?termo=" + product_slug)
 
     doc.search('.product-block__title a').map do |e|
-      get_info(@url + e.attr('href'))
+      # Won't follow link if product name is already on DB
+      product_name = e.search('span').text
+      product = Product.find_by_name(product_name)
+      product ? product : get_info(@url + e.attr('href'))
     end
   end
 
@@ -33,8 +34,13 @@ class ScrapeService
   end
 
   def self.get_info(product_url)
-    # Gets the HTML
-    doc = get_page(product_url)
+    # Gets the HTML rescues and sends (Product Unavailable) if broken link
+    begin
+      doc = get_page(product_url)
+    rescue OpenURI::HTTPError => e
+      p "---\n#{e.message} for #{product_url}\n---"
+      return Product.new(name: "Product from #{product_url} is unavailable");
+    end
 
     ### Builds the product
     @product = Product.new
@@ -60,14 +66,11 @@ class ScrapeService
         # Uses ingredients from DB or Creates and uses a new ingredient
         ingredient = Ingredient.find_by_name(ingredient_string)
         if ingredient.nil?
-          p "------------------Creating ingredient:----------------------------"
           product_ingredient.ingredient = Ingredient.create(name: ingredient_string)
-          p '---------------------------------------------------------------------------'
         else
           product_ingredient.ingredient = ingredient
         end
         product_ingredient.save
-        p '---------------------------------------------------------------------------'
 
         @product.product_ingredients << product_ingredient
       end
@@ -77,9 +80,7 @@ class ScrapeService
     prices = doc.search('.presentation-offer__price-value strong').map { |price| price.text.delete(',').to_i }
     @product.price = prices.sum / prices.size
 
-    p "------------------Saving product: #{@product}----------------------------"
     # Returns and saves result on DB
-    p "----------------------------------------------"
     @product.save
     @product
   end
