@@ -1,7 +1,7 @@
 %h1== Searching for name #{params[:name]}
 
 - @products.each do |product|
-  %h2= product.name
+  %h2= link_to product.name, product.path
   %h3= monetize(product.price)
   %ul
     - if product.product_ingredients

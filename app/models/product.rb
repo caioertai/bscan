@@ -10,4 +10,8 @@ class Product < ApplicationRecord
   validates :name, uniqueness: true
   has_many :product_ingredients
   has_many :ingredients, through: :product_ingredients
+
+  def path
+    "/product/#{ean}"
+  end
 end
