@@ -1,7 +1,6 @@
-%h1== Searching for EAN #{params[:ean]}
-%h2= @product.name
+%h1= @product.name
 %h3= monetize(@product.price)
 %ul
   - if @product.product_ingredients
     - @product.product_ingredients.each do |product_ingredients|
-      %li== #{product_ingredients.composition_index}. #{product_ingredients.ingredient.name}
+      %li== #{product_ingredients.composition_index + 1}. #{product_ingredients.ingredient.name}
