@@ -6,13 +6,13 @@
     = form_tag "/search_by_ean", method: 'get' do
       .input-group
         = text_field_tag :ean, params[:ean], class: 'input-group-field'
-        .input-group-button= submit_tag "Search by EAN", name: nil, class: 'button'
+        .input-group-button= submit_tag "Go", name: nil, class: 'button'
   .cell.medium-6
     %h2 Search by name
     = form_tag "/search_by_name", method: 'get' do
       .input-group
         = text_field_tag :name, params[:name], class: 'input-group-field'
-        .input-group-button= submit_tag "Search by name", name: nil, class: 'button'
+        .input-group-button= submit_tag "Go", name: nil, class: 'button'
 
 -# = form_for @product do |f|
 -#   - if @product.errors.any?

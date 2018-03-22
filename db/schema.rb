@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180320000907) do
+ActiveRecord::Schema.define(version: 20180321215152) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180320000907) do
     t.integer "ean", limit: 8
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "document"
   end
 
 end
