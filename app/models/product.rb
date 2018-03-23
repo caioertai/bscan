@@ -8,6 +8,8 @@
 class Product < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: true
+  validates :ean, presence: true
+
   has_many :product_ingredients
   has_many :ingredients, through: :product_ingredients
 
