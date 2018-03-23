@@ -15,15 +15,18 @@ class ParseService
 
   def self.save_formula(product)
     composition = Nokogiri::HTML(product.document).at("#descricao h2:contains('Composição')")
+    p "Parsing #{product.name}"
     return if composition.nil?
     composition.next_element.text.split(',').each_with_index do |ing_str, index|
       # TODO: change composition to formula on the models.
       # TODO: Maybe create an ingredient aliases column?
       ing_str = normalize(ing_str)
+
       next if product.ingredients.find_by_name(ing_str)
 
-      ingredient = Ingredient.create(name: ing_str)
-      product.product_ings << ProductIngredient.new(composition_index: index, product: product, ingredient: ingredient)
+      ingredient = Ingredient.find_by_name(ing_str) || Ingredient.create(name: ing_str)
+      product.product_ingredients << ProductIngredient.new(composition_index: index, product: product, ingredient: ingredient)
     end
+    product.ingredients
   end
 end
