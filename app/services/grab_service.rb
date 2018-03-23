@@ -10,8 +10,8 @@ class GrabService
 
   def self.search_by_name(product_name)
     # Treats name to use in URL
-    url = "https://consultaremedios.com.br"
-    product_slug = I18n.transliterate(product_name.downcase.gsub('+', '%2B').gsub(' ', '+'))
+    url = 'https://consultaremedios.com.br'
+    product_slug = I18n.transliterate(product_name.downcase.gsub('+', '%2B').tr(' ', '+'))
     search_url = "#{url}/busca?termo=#{product_slug}"
 
     get_page(search_url).search('.product-block__title a').map do |e|
@@ -23,7 +23,7 @@ class GrabService
   end
 
   def self.search_by_ean(product_ean)
-    product_url = "https://consultaremedios.com.br/busca?termo=" + product_ean.to_s
+    product_url = 'https://consultaremedios.com.br/busca?termo=' + product_ean.to_s
     product = Product.find_by_ean(product_ean)
     product.nil? ? create_product(product_url) : product
   end
@@ -39,35 +39,33 @@ class GrabService
       product = Product.find_by_name(product_name)
       product ? product : create_product("https://consultaremedios.com.br#{e.attr('href')}")
     end
-
   end
 
   def self.create_product(product_url)
     # Gets the HTML rescues and sends (Product Unavailable) if broken link
-    begin
-      doc = get_page(product_url)
-      product = {}
-      product[:name] = doc.at('.product-header__title')
-      product[:ean] = doc.at('.presentation-offer-info__ean strong')
-      product[:url] = product_url
-      product[:document] = doc
-      product = ParseService.ensure_types_of(product)
 
-      # Saves on DB and returns result
-      Product.create(product)
-    rescue OpenURI::HTTPError => e
-      Product.new(name: "Product from #{product_url} is unavailable");
-    end
+    doc = get_page(product_url)
+    product = {}
+    product[:name] = doc.at('.product-header__title')
+    product[:ean] = doc.at('.presentation-offer-info__ean strong')
+    product[:url] = product_url
+    product[:document] = doc
+    product = ParseService.ensure_types_of(product)
+
+    # Saves on DB and returns result
+    Product.create(product)
+  rescue OpenURI::HTTPError
+    Product.new(name: "Product from #{product_url} is unavailable")
   end
 
   def self.grab_all_from_type(type)
     current_page = 0
-    while
+    while 1 != 2
       current_page += 1
       current_url = "https://consultaremedios.com.br/beleza-e-saude/cabelos/#{type}/c?pagina=#{current_page}"
       begin
         at_url(current_url)
-      rescue OpenURI::HTTPError => e
+      rescue OpenURI::HTTPError
         break
       end
     end
