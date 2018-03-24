@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @attributes = Product.attribute_names - ['document', 'created_at', 'updated_at']
   end
 
   # GET /products/new

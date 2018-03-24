@@ -1,6 +1,6 @@
 %p#notice= notice
 
-- (Product.attribute_names - ['document']).each do |attr|
+- @attributes.each do |attr|
   %p
     %b= attr.capitalize
     = @product.send(attr.to_sym)
