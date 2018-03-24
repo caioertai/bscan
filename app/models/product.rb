@@ -17,14 +17,9 @@ class Product < ApplicationRecord
     "/product/#{ean}"
   end
 
-  def parse_formula
-    ParseService.save_formula(self)
-  end
-
-  def parse_brand
-    ParseService.save_brand(self)
-  end
-  def parse_factory
-    ParseService.save_factory(self)
+  attribute_names.each do |attribute|
+    define_method :"parse_#{attribute}" do
+      ParseService.send(:"save_#{attribute}", self)
+    end
   end
 end
