@@ -24,6 +24,17 @@ class ParseService
     product.brand
   end
 
+  def self.save_factory(product)
+    p "Parsing #{product.name}"
+    doc = Nokogiri::HTML(product.document)
+    product_header = doc.at('.product-header__infos')
+    factory = product_header.at('.cr-icon-factory.product-block__meta-icon')
+    return if factory.nil?
+    product.factory = factory.parent.text.strip
+    product.save
+    product.factory
+  end
+
   def self.save_formula(product)
     composition = Nokogiri::HTML(product.document).at("#descricao h2:contains('Composição')")
     p "Parsing #{product.name}"
