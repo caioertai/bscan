@@ -1,5 +1,7 @@
 %h1= @product.name
 %h3= monetize(@product.price)
+- if @product.brand
+  %h6= @product.brand
 %ul
   - if @product.product_ingredients
     - @product.product_ingredients.each do |product_ingredients|

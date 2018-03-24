@@ -16,4 +16,12 @@ class Product < ApplicationRecord
   def path
     "/product/#{ean}"
   end
+
+  def parse_formula
+    ParseService.save_formula(self)
+  end
+
+  def parse_brand
+    ParseService.save_brand(self)
+  end
 end

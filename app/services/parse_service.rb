@@ -13,6 +13,17 @@ class ParseService
     string.strip.gsub('/\s+/', ' ').gsub(' / ', '/').chomp('.')
   end
 
+  def self.save_brand(product)
+    p "Parsing #{product.name}"
+    doc = Nokogiri::HTML(product.document)
+    product_header = doc.at('.product-header__infos')
+    brand = product_header.at('.cr-icon-brand.product-block__meta-icon')
+    return if brand.nil?
+    product.brand = brand.parent.text.strip
+    product.save
+    product.brand
+  end
+
   def self.save_formula(product)
     composition = Nokogiri::HTML(product.document).at("#descricao h2:contains('Composição')")
     p "Parsing #{product.name}"
