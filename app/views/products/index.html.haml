@@ -1,22 +1,41 @@
 %h1 Listing products
 
-.product-grid
-  - @products.each do |product|
-    .card
-      .card-divider
-        %h5= product.name
-        %span= product.ean
-      .card-section
-        %h6= product.brand
-        %h6= product.factory
-        %ul
-          - product.ingredients.each do |ingredient|
-            %li= ingredient.name
-        %p.text-right
+-# .product-grid
+-#   - @products.each do |product|
+-#     .card
+-#       .card-divider
+-#         %h5= product.name
+-#         %span= product.ean
+-#       .card-section
+-#         %h6= product.brand
+-#         %h6= product.factory
+-#         %ul
+-#           - product.ingredients.each do |ingredient|
+-#             %li= ingredient.name
+-#         %p.text-right
+-#           = link_to 'Source', product.url
+-#           = link_to 'Show', product
+-#           = link_to 'Edit', edit_product_path(product)
+-#           = link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }
+
+%table
+  %thead.sticky
+    %th Name
+    %th EAN
+    %th Brand
+    %th Factory
+    %th Ingredients
+    %th
+  %tbody
+    - @products.each do |product|
+      %tr
+        %td= product.name
+        %td= product.ean
+        %td= product.brand
+        %td= product.factory
+        %td= product.ingredients.empty? ? '' : 'Yes'
+        %td.text-right
           = link_to 'Source', product.url
           = link_to 'Show', product
           = link_to 'Edit', edit_product_path(product)
           = link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }
-
-
-= link_to 'New Product', new_product_path

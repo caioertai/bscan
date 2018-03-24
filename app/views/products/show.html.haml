@@ -1,15 +1,9 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @product.name
-%p
-  %b Price:
-  = @product.price
-%p
-  %b Ean:
-  = @product.ean
+- (Product.attribute_names - ['document']).each do |attr|
+  %p
+    %b= attr.capitalize
+    = @product.send(attr.to_sym)
 
 = link_to 'Edit', edit_product_path(@product)
-\|
 = link_to 'Back', products_path

@@ -18,8 +18,7 @@ class ParseService
     doc = Nokogiri::HTML(product.document)
     product_header = doc.search('.product-header__infos').last
     brand = product_header.at('.cr-icon-brand.product-block__meta-icon')
-    return if brand.nil?
-    product.brand = brand.parent.text.strip
+    product.brand = brand.nil? ? '' : brand.parent.text.strip
     product.save
     product.brand
   end
@@ -29,13 +28,12 @@ class ParseService
     doc = Nokogiri::HTML(product.document)
     product_header = doc.search('.product-header__infos').last
     factory = product_header.at('.cr-icon-factory.product-block__meta-icon')
-    return if factory.nil?
-    product.factory = factory.parent.text.strip
+    product.factory = factory.nil? ? '' : factory.parent.text.strip
     product.save
     product.factory
   end
 
-  def self.save_formula(product)
+  def self.save_ingredients(product)
     composition = Nokogiri::HTML(product.document).at("#descricao h2:contains('Composição')")
     p "Parsing #{product.name}"
     return if composition.nil?

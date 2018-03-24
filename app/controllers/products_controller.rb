@@ -21,6 +21,12 @@ class ProductsController < ApplicationController
   def edit
   end
 
+  # GET /anomalies
+  def anomalies
+    @anomalies = Product.where("LENGTH(ean) < 13")
+    @attributes = Product.attribute_names - ['document', 'created_at', 'updated_at', 'url']
+  end
+
   # POST /products
   # POST /products.json
   def create

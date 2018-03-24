@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get '/search_by_ean', to: 'pages#search_by_ean'
   get '/product/:ean', to: 'pages#search_by_ean'
   get '/search_by_name', to: 'pages#search_by_name'
+  get '/anomalies', to: 'products#anomalies'
 end

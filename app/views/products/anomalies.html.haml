@@ -1,0 +1,14 @@
+%table
+  %thead.sticky
+    - @attributes.each do |attr|
+      %th= attr.capitalize
+    %th
+  %tbody
+    - @anomalies.each do |anomaly|
+      %tr
+        - @attributes.each do |attr|
+          %td
+            = anomaly.send(attr.to_sym)
+        %td
+          = link_to 'Show', anomaly
+          = link_to 'Edit', edit_product_path(anomaly)

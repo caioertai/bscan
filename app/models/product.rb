@@ -17,7 +17,7 @@ class Product < ApplicationRecord
     "/product/#{ean}"
   end
 
-  attribute_names.each do |attribute|
+  (attribute_names + ['ingredients']).each do |attribute|
     define_method :"parse_#{attribute}" do
       ParseService.send(:"save_#{attribute}", self)
     end
