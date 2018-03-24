@@ -16,7 +16,7 @@ class ParseService
   def self.save_brand(product)
     p "Parsing #{product.name}"
     doc = Nokogiri::HTML(product.document)
-    product_header = doc.at('.product-header__infos')
+    product_header = doc.search('.product-header__infos').last
     brand = product_header.at('.cr-icon-brand.product-block__meta-icon')
     return if brand.nil?
     product.brand = brand.parent.text.strip
@@ -27,7 +27,7 @@ class ParseService
   def self.save_factory(product)
     p "Parsing #{product.name}"
     doc = Nokogiri::HTML(product.document)
-    product_header = doc.at('.product-header__infos')
+    product_header = doc.search('.product-header__infos').last
     factory = product_header.at('.cr-icon-factory.product-block__meta-icon')
     return if factory.nil?
     product.factory = factory.parent.text.strip

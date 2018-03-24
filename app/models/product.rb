@@ -24,4 +24,7 @@ class Product < ApplicationRecord
   def parse_brand
     ParseService.save_brand(self)
   end
+  def parse_factory
+    ParseService.save_factory(self)
+  end
 end

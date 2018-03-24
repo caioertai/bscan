@@ -8,6 +8,7 @@
         %span= product.ean
       .card-section
         %h6= product.brand
+        %h6= product.factory
         %ul
           - product.ingredients.each do |ingredient|
             %li= ingredient.name

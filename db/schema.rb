@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324142756) do
+ActiveRecord::Schema.define(version: 20180324151709) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20180324142756) do
     t.string "document"
     t.string "url"
     t.string "brand"
+    t.string "factory"
   end
 
 end
