@@ -29,10 +29,6 @@ class GrabService
   end
 
   def self.at_url(url)
-    # get_page(url).search('.product-block__title a span').map do |e|
-    #   product = Product.find_by_url(product_url)
-    #   product ? product : create_product(product_url)
-    # end
     get_page(url).search('.product-block__title a').map do |e|
       # Won't follow link if product name is already on DB
       product_name = e.search('span').text

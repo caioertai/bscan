@@ -29,4 +29,15 @@ class ParseService
     end
     product.ingredients
   end
+
+  def self.save_group_formulas(array)
+    array.each do |product|
+      save_formula(product)
+      array.count
+    end
+  end
+
+  def self.save_price(product)
+
+  end
 end
