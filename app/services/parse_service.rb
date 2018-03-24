@@ -9,7 +9,7 @@ class ParseService
     item
   end
 
-  def self.normalize(string)
+  def self.normalize_string(string)
     string.strip.gsub('/\s+/', ' ').gsub(' / ', '/').chomp('.')
   end
 
@@ -42,7 +42,7 @@ class ParseService
     composition.next_element.text.split(',').each_with_index do |ing_str, index|
       # TODO: change composition to formula on the models.
       # TODO: Maybe create an ingredient aliases column?
-      ing_str = normalize(ing_str)
+      ing_str = normalize_string(ing_str)
 
       next if product.ingredients.find_by_name(ing_str)
 
