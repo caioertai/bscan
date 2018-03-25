@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   root to: 'search#search'
   get '/search_by_ean', to: 'search#search_by_ean'
   get '/search_by_name', to: 'search#search_by_name'
+  get '/lev_distance/:name_to_match', to: 'search#lev_distance'
   get '/anomalies', to: 'products#anomalies'
 end

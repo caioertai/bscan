@@ -1,0 +1,6 @@
+%h1== Close matches for #{params[:name_to_match]}
+
+- @close_matches.each do |match|
+  %p
+    %b= match.id
+    = match.name
