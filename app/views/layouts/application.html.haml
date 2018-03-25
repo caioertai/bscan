@@ -4,8 +4,22 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Bscan
     = csrf_meta_tags
-    = stylesheet_link_tag    'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    .grid-container= yield
+    .top-bar
+      .top-bar-left
+        %ul.menu
+          %li.menu-text BScan
+          %li= link_to 'Products', products_path
+          %li= link_to 'Anomalies', anomalies_path
+      .top-bar-right
+        %ul.menu
+          %li
+            = form_tag "/search_by_ean", method: 'get' do
+              = text_field_tag :ean, params[:ean], type: 'search', placeholder: 'Search by EAN', class: 'input-group-field'
+          %li
+            = form_tag "/search_by_name", method: 'get' do
+              = text_field_tag :name, params[:name], type: 'search', placeholder: 'Search by Name', class: 'input-group-field'
+
+    .grid-container.padded= yield
