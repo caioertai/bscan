@@ -1,9 +1,10 @@
 # pages
 class PagesController < ApplicationController
-  def search; end
+  # def search; end
 
   def search_by_ean
-    @product = GrabService.search_by_ean(params[:ean])
+    product = Product.find_by_ean(params[:ean]) || GrabService.search_by_ean(params[:ean])
+    redirect_to product
   end
 
   def search_by_name

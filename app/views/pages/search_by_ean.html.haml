@@ -1,9 +1,0 @@
-%h1= @product.name
-%h3= monetize(@product.price)
-- if @product.brand
-  %h6= @product.brand
-%ul
-  - if @product.product_ingredients
-    - @product.product_ingredients.each do |product_ingredients|
-      %li== #{product_ingredients.composition_index + 1}. #{product_ingredients.ingredient.name}
-    = link_to 'Link to source', @product.url
