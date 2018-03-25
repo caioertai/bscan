@@ -1,5 +1,5 @@
 # pages
-class PagesController < ApplicationController
+class SearchController < ApplicationController
   # def search; end
 
   def search_by_ean

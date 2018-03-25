@@ -2,13 +2,11 @@ Rails.application.routes.draw do
   resources :product_ingredients
   resources :ingredients
   resources :products
-  resources :pages
+  resources :search
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: 'pages#search'
-  get '/search/', to: 'pages#search'
-  get '/search_by_ean', to: 'pages#search_by_ean'
-  get '/product/:ean', to: 'pages#search_by_ean'
-  get '/search_by_name', to: 'pages#search_by_name'
+  root to: 'search#search'
+  get '/search_by_ean', to: 'search#search_by_ean'
+  get '/search_by_name', to: 'search#search_by_name'
   get '/anomalies', to: 'products#anomalies'
 end
