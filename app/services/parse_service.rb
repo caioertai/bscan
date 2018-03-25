@@ -10,7 +10,7 @@ class ParseService
   end
 
   def self.normalize_string(string)
-    string.strip.gsub('/\s+/', ' ').gsub(' / ', '/').chomp('.')
+    string.gsub('/\s+/', ' ').gsub(' / ', '/').strip.chomp('.').strip
   end
 
   def self.save_brand(product)
