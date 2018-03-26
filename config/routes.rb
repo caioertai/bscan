@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root to: 'search#search'
-  get '/search_by_ean', to: 'search#search_by_ean'
-  get '/search_by_name', to: 'search#search_by_name'
-  get '/lev_distance/:name_to_match', to: 'search#lev_distance'
+  get '/by_ean', to: 'search#by_ean'
+  get '/by_name', to: 'search#by_name'
+  get '/close_match', to: 'search#close_match'
   get '/anomalies', to: 'products#anomalies'
 end

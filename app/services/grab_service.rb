@@ -8,7 +8,7 @@ class GrabService
     Nokogiri::HTML(open(url), nil, Encoding::UTF_8.to_s)
   end
 
-  def self.search_by_name(product_name)
+  def self.by_name(product_name)
     # Treats name to use in URL
     url = 'https://consultaremedios.com.br'
     product_slug = I18n.transliterate(product_name.downcase.gsub('+', '%2B').tr(' ', '+'))
@@ -22,7 +22,7 @@ class GrabService
     end
   end
 
-  def self.search_by_ean(product_ean)
+  def self.by_ean(product_ean)
     product_url = 'https://consultaremedios.com.br/busca?termo=' + product_ean.to_s
     product = Product.find_by_ean(product_ean)
     product.nil? ? create_product(product_url) : product

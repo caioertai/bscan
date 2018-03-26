@@ -3,13 +3,13 @@
 .grid-x.grid-margin-x
   .cell.medium-6
     %h2 Search by EAN
-    = form_tag "/search_by_ean", method: 'get' do
+    = form_tag "/by_ean", method: 'get' do
       .input-group
         = text_field_tag :ean, params[:ean], class: 'input-group-field'
         .input-group-button= submit_tag "Go", name: nil, class: 'button'
   .cell.medium-6
     %h2 Search by name
-    = form_tag "/search_by_name", method: 'get' do
+    = form_tag "/by_name", method: 'get' do
       .input-group
         = text_field_tag :name, params[:name], class: 'input-group-field'
         .input-group-button= submit_tag "Go", name: nil, class: 'button'

@@ -17,10 +17,13 @@
       .top-bar-right
         %ul.menu
           %li
-            = form_tag "/search_by_ean", method: 'get' do
+            = form_tag "/close_match", method: 'get' do
+              = text_field_tag :name_to_match, params[:name_to_match], type: 'search', placeholder: 'Search similar ingredient', class: 'input-group-field'
+          %li
+            = form_tag "/by_ean", method: 'get' do
               = text_field_tag :ean, params[:ean], type: 'search', placeholder: 'Search by EAN', class: 'input-group-field'
           %li
-            = form_tag "/search_by_name", method: 'get' do
+            = form_tag "/by_name", method: 'get' do
               = text_field_tag :name, params[:name], type: 'search', placeholder: 'Search by Name', class: 'input-group-field'
 
     .grid-container.padded= yield
