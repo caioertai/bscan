@@ -13,8 +13,17 @@ class ParseService
     string.gsub('/\s+/', ' ').gsub(' / ', '/').strip.chomp('.').strip
   end
 
-  def self.save_brand(product)
-    p "Parsing #{product.name}"
+  def self.parse_ean(product)
+    puts "Parsing #{product.name}"
+    doc = Nokogiri::HTML(product.document)
+    ean = doc.at('.presentation-offer-info__ean strong')
+    product.ean = ean.nil? ? '' : ean.text.strip
+    product.save
+    product.ean
+  end
+
+  def self.parse_brand(product)
+    puts "Parsing #{product.name}"
     doc = Nokogiri::HTML(product.document)
     product_header = doc.search('.product-header__infos').last
     brand = product_header.at('.cr-icon-brand.product-block__meta-icon')
@@ -23,8 +32,8 @@ class ParseService
     product.brand
   end
 
-  def self.save_factory(product)
-    p "Parsing #{product.name}"
+  def self.parse_factory(product)
+    puts "Parsing #{product.name}"
     doc = Nokogiri::HTML(product.document)
     product_header = doc.search('.product-header__infos').last
     factory = product_header.at('.cr-icon-factory.product-block__meta-icon')
@@ -33,9 +42,9 @@ class ParseService
     product.factory
   end
 
-  def self.save_ingredients(product)
+  def self.parse_ingredients(product)
     composition = Nokogiri::HTML(product.document).at("#descricao h2:contains('Composição')")
-    p "Parsing #{product.name}"
+    puts "Parsing #{product.name}"
     return if composition.nil?
     composition.next_element.text.split(',').each_with_index do |ing_str, index|
       # TODO: change composition to formula on the models.
@@ -49,14 +58,7 @@ class ParseService
     product.ingredients
   end
 
-  def self.save_group_formulas(array)
-    array.each do |product|
-      save_formula(product)
-      array.count
-    end
-  end
-
-  def self.save_price(product)
-
+  def self.parse_price(product)
+    # TODO: parse_price
   end
 end
