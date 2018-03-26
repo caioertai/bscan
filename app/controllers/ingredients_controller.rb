@@ -10,6 +10,7 @@ class IngredientsController < ApplicationController
   # GET /ingredients/1
   # GET /ingredients/1.json
   def show
+    @attributes = Ingredient.attribute_names - ['created_at', 'updated_at']
   end
 
   # GET /ingredients/new

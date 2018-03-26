@@ -1,12 +1,30 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @ingredient.name
-%p
-  %b Description:
-  = @ingredient.description
-
+- @attributes.each do |attr|
+  %p
+    %b= attr.capitalize
+    = @ingredient.send(attr.to_sym)
 = link_to 'Edit', edit_ingredient_path(@ingredient)
-\|
 = link_to 'Back', ingredients_path
+
+%table
+  %thead.sticky
+    %th Name
+    %th EAN
+    %th Brand
+    %th Factory
+    %th Ingredients
+    %th
+  %tbody
+    - @ingredient.products.each do |product|
+      %tr
+        %td= product.name
+        %td= product.ean
+        %td= product.brand
+        %td= product.factory
+        %td= product.ingredients.empty? ? '' : 'Yes'
+        %td.text-right
+          = link_to 'Source', product.url
+          = link_to 'Show', product
+          = link_to 'Edit', edit_product_path(product)
+          = link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }

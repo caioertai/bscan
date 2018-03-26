@@ -1,22 +1,21 @@
 %h1 Listing ingredients
 
 %table
-  %thead
+  %thead.sticky
     %tr
+      %th Usage
       %th Name
-      %th Description
-      %th
-      %th
       %th
 
   %tbody
-    - @ingredients.each do |ingredient|
+    - @ingredients.sort_by { |ingredient| -ingredient.products.count }.each do |ingredient|
       %tr
+        %td= ingredient.products.count
         %td= ingredient.name
-        %td= ingredient.description
-        %td= link_to 'Show', ingredient
-        %td= link_to 'Edit', edit_ingredient_path(ingredient)
-        %td= link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          = link_to 'Show', ingredient
+          = link_to 'Edit', edit_ingredient_path(ingredient)
+          = link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
