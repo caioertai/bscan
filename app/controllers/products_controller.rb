@@ -24,8 +24,10 @@ class ProductsController < ApplicationController
 
   # GET /anomalies
   def anomalies
-    @anomalies = Product.where("LENGTH(ean) < 13")
-    @attributes = Product.attribute_names - ['document', 'created_at', 'updated_at', 'url']
+    anomalies = {}
+    anomalies['EAN < 13'] = Product.where('LENGTH(ean) < 13')
+    anomalies['EAN > 13'] = Product.where('LENGTH(ean) > 13')
+    @anomalies_list = anomalies
   end
 
   # POST /products
