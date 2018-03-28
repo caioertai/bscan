@@ -5,18 +5,11 @@
     %tr
       %th Usage
       %th Name
-      %th
 
   %tbody
     - @ingredients.sort_by { |ingredient| -ingredient.products.count }.each do |ingredient|
       %tr
         %td= ingredient.products.count
-        %td= ingredient.name
-        %td
-          = link_to 'Show', ingredient
-          = link_to 'Edit', edit_ingredient_path(ingredient)
-          = link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
+        %td= link_to ingredient.name, ingredient
 
 = link_to 'New Ingredient', new_ingredient_path

@@ -20,8 +20,8 @@
 
 %table
   %thead.sticky
-    %th Name
     %th EAN
+    %th Name
     %th Brand
     %th Factory
     %th Ingredients
@@ -29,13 +29,9 @@
   %tbody
     - @products.each do |product|
       %tr
-        %td= product.name
         %td= product.ean
+        %td= link_to product.name, product
         %td= product.brand
         %td= product.factory
-        %td= product.ingredients.empty? ? '' : 'Yes'
-        %td.text-right
-          = link_to 'Source', product.url
-          = link_to 'Show', product
-          = link_to 'Edit', edit_product_path(product)
-          = link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }
+        %td.text-center= product.ingredients.empty? ? '' : 'Yes'
+        %td.text-right= link_to 'Source', product.url
