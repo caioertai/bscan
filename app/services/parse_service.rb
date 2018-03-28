@@ -44,7 +44,7 @@ class ParseService
 
   def self.parse_ingredients(product)
     composition = Nokogiri::HTML(product.document).at("#descricao h2:contains('Composição')")
-    puts "Parsing #{product.name}"
+    # puts "Parsing #{product.name}"
     return if composition.nil?
     composition.next_element.text.split(',').each_with_index do |ing_str, index|
       # TODO: change composition to formula on the models.

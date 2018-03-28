@@ -38,7 +38,11 @@ gem 'autoprefixer-rails'
 gem 'foundation'
 gem 'foundation-rails', '6.4.1'
 gem 'jquery-rails'
+
+gem 'kaminari'
 gem 'money'
+
+gem 'httparty'
 gem 'nokogiri'
 
 # Fuzzy match

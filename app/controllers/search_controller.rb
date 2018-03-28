@@ -1,3 +1,4 @@
+# app/controllers/search_controller
 class SearchController < ApplicationController
   def by_ean
     product = Product.find_by_ean(params[:ean]) || GrabService.by_ean(params[:ean])

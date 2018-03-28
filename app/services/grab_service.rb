@@ -5,7 +5,7 @@ require 'open-uri'
 class GrabService
   def self.get_page(url)
     puts "-----\n#{url}\n-----"
-    Nokogiri::HTML(open(url), nil, Encoding::UTF_8.to_s)
+    Nokogiri::HTML(HTTParty.get(url), nil, Encoding::UTF_8.to_s)
   end
 
   def self.by_name(product_name)

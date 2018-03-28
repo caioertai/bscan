@@ -1,16 +1,18 @@
+# app/controllers/search_controller
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: %i[show edit update destroy]
 
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    # @products = Product.all
+    @products = Product.all.page params[:page]
   end
 
   # GET /products/1
   # GET /products/1.json
   def show
-    @attributes = Product.attribute_names - ['document', 'created_at', 'updated_at']
+    @attributes = Product.attribute_names - %w[document created_at updated_at]
   end
 
   # GET /products/new
@@ -19,8 +21,7 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1/edit
-  def edit
-  end
+  def edit; end
 
   # GET /anomalies
   def anomalies
@@ -71,13 +72,12 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:name, :price, :ean)
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:name, :price, :ean)
+  end
 end
