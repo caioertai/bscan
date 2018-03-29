@@ -1,5 +1,6 @@
+# app/controllers/ingredients_controller.rb
 class IngredientsController < ApplicationController
-  before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
+  before_action :set_ingredient, only: %i[show edit update destroy]
 
   # GET /ingredients
   # GET /ingredients.json
@@ -10,7 +11,7 @@ class IngredientsController < ApplicationController
   # GET /ingredients/1
   # GET /ingredients/1.json
   def show
-    @attributes = Ingredient.attribute_names - ['created_at', 'updated_at']
+    @attributes = Ingredient.attribute_names - %w[created_at updated_at]
   end
 
   # GET /ingredients/new
@@ -19,8 +20,7 @@ class IngredientsController < ApplicationController
   end
 
   # GET /ingredients/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /ingredients
   # POST /ingredients.json
@@ -63,13 +63,14 @@ class IngredientsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ingredient
-      @ingredient = Ingredient.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ingredient_params
-      params.require(:ingredient).permit(:name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ingredient
+    @ingredient = Ingredient.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ingredient_params
+    params.require(:ingredient).permit(:name, :description)
+  end
 end
