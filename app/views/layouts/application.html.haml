@@ -7,23 +7,5 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    .top-bar
-      .top-bar-left
-        %ul.menu
-          %li.menu-text BScan
-          %li= link_to 'Products', products_path
-          %li= link_to 'Ingredients', ingredients_path
-          %li= link_to 'Anomalies', anomalies_path
-      .top-bar-right
-        %ul.menu
-          %li
-            = form_tag "/close_match", method: 'get' do
-              = text_field_tag :name_to_match, params[:name_to_match], type: 'search', placeholder: 'Search similar ingredient', class: 'input-group-field'
-          %li
-            = form_tag "/by_ean", method: 'get' do
-              = text_field_tag :ean, params[:ean], type: 'search', placeholder: 'Search by EAN', class: 'input-group-field'
-          %li
-            = form_tag "/by_name", method: 'get' do
-              = text_field_tag :name, params[:name], type: 'search', placeholder: 'Search by Name', class: 'input-group-field'
-
+    = render 'shared/topbar'
     .grid-container= yield
