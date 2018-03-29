@@ -35,8 +35,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Custom
 gem 'autoprefixer-rails'
-gem 'foundation'
-gem 'foundation-rails', '6.4.1'
+gem 'foundation-rails', '6.4.3'
 gem 'jquery-rails'
 
 gem 'kaminari'
