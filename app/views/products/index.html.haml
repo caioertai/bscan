@@ -1,25 +1,6 @@
 %h1 Listing products
 
--# .product-grid
--#   - @products.each do |product|
--#     .card
--#       .card-divider
--#         %h5= product.name
--#         %span= product.ean
--#       .card-section
--#         %h6= product.brand
--#         %h6= product.factory
--#         %ul
--#           - product.ingredients.each do |ingredient|
--#             %li= ingredient.name
--#         %p.text-right
--#           = link_to 'Source', product.url
--#           = link_to 'Show', product
--#           = link_to 'Edit', edit_product_path(product)
--#           = link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }
-
-%p
-  .text-center= paginate @products
+.text-center= paginate @products
 
 %table
   %thead.sticky
@@ -38,3 +19,5 @@
         %td= product.factory
         %td.text-center= product.ingredients.empty? ? '' : 'Yes'
         %td.text-right= link_to 'Source', product.url
+
+.text-center= paginate @products
