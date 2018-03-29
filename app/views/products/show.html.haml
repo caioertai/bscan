@@ -1,11 +1,12 @@
-%p#notice= notice
+%main.grid-container
+  %p#notice= notice
 
-- @attributes.each do |attr|
-  %p
-    %b= attr.capitalize
-    = @product.send(attr.to_sym)
+  - @attributes.each do |attr|
+    %p
+      %b= attr.capitalize
+      = @product.send(attr.to_sym)
 
-%p= @product.ingredients.map(&:name)
+  %p= @product.ingredients.map(&:name)
 
-= link_to 'Edit', edit_product_path(@product)
-= link_to 'Back', products_path
+  = link_to 'Edit', edit_product_path(@product)
+  = link_to 'Back', products_path

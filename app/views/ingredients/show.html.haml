@@ -1,24 +1,25 @@
-%p#notice= notice
+%main.grid-container
+  %p#notice= notice
 
-- @attributes.each do |attr|
-  %p
-    %b= attr.capitalize
-    = @ingredient.send(attr.to_sym)
-= link_to 'Edit', edit_ingredient_path(@ingredient)
-= link_to 'Back', ingredients_path
+  - @attributes.each do |attr|
+    %p
+      %b= attr.capitalize
+      = @ingredient.send(attr.to_sym)
+  = link_to 'Edit', edit_ingredient_path(@ingredient)
+  = link_to 'Back', ingredients_path
 
-%table
-  %thead.sticky
-    %th EAN
-    %th Name
-    %th Brand
-    %th Factory
-    %th
-  %tbody
-    - @ingredient.products.each do |product|
-      %tr
-        %td= product.ean
-        %td= link_to product.name, product
-        %td= product.brand
-        %td= product.factory
-        %td.text-right= link_to 'Source', product.url
+  %table
+    %thead.sticky
+      %th EAN
+      %th Name
+      %th Brand
+      %th Factory
+      %th
+    %tbody
+      - @ingredient.products.each do |product|
+        %tr
+          %td= product.ean
+          %td= link_to product.name, product
+          %td= product.brand
+          %td= product.factory
+          %td.text-right= link_to 'Source', product.url

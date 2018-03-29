@@ -1,29 +1,30 @@
-%h1== Similarity for #{params[:name_to_match]}
+%main.grid-container
+  %h1== Similarity for #{params[:name_to_match]}
 
--# %h2== Similarity of #{proximity}
+  -# %h2== Similarity of #{proximity}
 
--# %table
--#   %thead.sticky
--#     %th Name
--#     %th Coeficient
--#   %tbody
--#     - @close_matches.sort_by { |e| -e[0] }.each do |match|
--#       %tr
--#         %td= match[1]
--#         %td= match[0]
+  -# %table
+  -#   %thead.sticky
+  -#     %th Name
+  -#     %th Coeficient
+  -#   %tbody
+  -#     - @close_matches.sort_by { |e| -e[0] }.each do |match|
+  -#       %tr
+  -#         %td= match[1]
+  -#         %td= match[0]
 
-%table
-  %thead.sticky
-    %th Id
-    %th Usage
-    %th Name
-    %th
-    %th
-  %tbody
-    - @close_matches.each do |match|
-      %tr
-        %td= match.obj1.id
-        %td= match.obj1.products.count
-        %td= match.obj1.name
-        %td== Overall: #{match.rating.round} | Lev: #{match.lev_rating.round} | Pair: #{match.pair_rating.round}#{' | Inclusion' if match.inclusion?}
-        %td.text-right= link_to 'Show', match.obj1
+  %table
+    %thead.sticky
+      %th Id
+      %th Usage
+      %th Name
+      %th
+      %th
+    %tbody
+      - @close_matches.each do |match|
+        %tr
+          %td= match.obj1.id
+          %td= match.obj1.products.count
+          %td= match.obj1.name
+          %td== Overall: #{match.rating.round} | Lev: #{match.lev_rating.round} | Pair: #{match.pair_rating.round}#{' | Inclusion' if match.inclusion?}
+          %td.text-right= link_to 'Show', match.obj1

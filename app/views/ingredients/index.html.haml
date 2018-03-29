@@ -1,25 +1,26 @@
-%h1 Ingredients
+%main.grid-container
+  %h1 Ingredients
 
-= link_to 'New Ingredient', new_ingredient_path
-.grid-x
-  .cell.medium-4.medium-offset-4
-    = form_tag "/close_match", method: 'get' do
-      = text_field_tag :name_to_match, params[:name_to_match], type: 'search', placeholder: 'Search similar ingredient', class: 'input-group-field'
-    %br
+  = link_to 'New Ingredient', new_ingredient_path
+  .grid-x
+    .cell.medium-4.medium-offset-4
+      = form_tag "/close_match", method: 'get' do
+        = text_field_tag :name_to_match, params[:name_to_match], type: 'search', placeholder: 'Search similar ingredient', class: 'input-group-field'
+      %br
 
-.text-center= paginate @ingredients
+  .text-center= paginate @ingredients
 
-%table
-  %thead.sticky
-    %tr
-      %th Usage
-      %th Name
-
-  %tbody
-    - @ingredients.sort_by { |ingredient| -ingredient.products.count }.each do |ingredient|
+  %table
+    %thead.sticky
       %tr
-        %td= ingredient.products.count
-        %td= link_to ingredient.name, ingredient
+        %th Usage
+        %th Name
+
+    %tbody
+      - @ingredients.sort_by { |ingredient| -ingredient.products.count }.each do |ingredient|
+        %tr
+          %td= ingredient.products.count
+          %td= link_to ingredient.name, ingredient
 
 
-.text-center= paginate @ingredients
+  .text-center= paginate @ingredients

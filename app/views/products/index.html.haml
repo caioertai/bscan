@@ -1,23 +1,24 @@
-%h1 Listing products
+%main.grid-container
+  %h1 Listing products
 
-.text-center= paginate @products
+  .text-center= paginate @products
 
-%table
-  %thead.sticky
-    %th EAN
-    %th Name
-    %th Brand
-    %th Factory
-    %th Ingredients
-    %th
-  %tbody
-    - @products.each do |product|
-      %tr
-        %td= product.ean
-        %td= link_to product.name, product
-        %td= product.brand
-        %td= product.factory
-        %td.text-center= product.ingredients.empty? ? '' : 'Yes'
-        %td.text-right= link_to 'Source', product.url
+  %table
+    %thead.sticky
+      %th EAN
+      %th Name
+      %th Brand
+      %th Factory
+      %th Ingredients
+      %th
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= product.ean
+          %td= link_to product.name, product
+          %td= product.brand
+          %td= product.factory
+          %td.text-center= product.ingredients.empty? ? '' : 'Yes'
+          %td.text-right= link_to 'Source', product.url
 
-.text-center= paginate @products
+  .text-center= paginate @products

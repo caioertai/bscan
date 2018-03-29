@@ -1,9 +1,10 @@
-%h1== Searching for name #{params[:name]}
+%main.grid-container
+  %h1== Searching for name #{params[:name]}
 
-- @products.each do |product|
-  %h2= link_to product.name, product.path
-  %h3= monetize(product.price)
-  %ul
-    - if product.product_ingredients
-      - product.product_ingredients.each do |product_ingredients|
-        %li== #{product_ingredients.composition_index}. #{product_ingredients.ingredient.name}
+  - @products.each do |product|
+    %h2= link_to product.name, product.path
+    %h3= monetize(product.price)
+    %ul
+      - if product.product_ingredients
+        - product.product_ingredients.each do |product_ingredients|
+          %li== #{product_ingredients.composition_index}. #{product_ingredients.ingredient.name}
