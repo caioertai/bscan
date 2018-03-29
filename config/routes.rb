@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
   get '/close_match', to: 'search#close_match'
-  get '/product_search', to: 'search#product_search'
+  get '/search', to: 'search#product_search'
   get '/anomalies', to: 'products#anomalies'
 end
