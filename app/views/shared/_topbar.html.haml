@@ -1,7 +1,12 @@
 .top-bar
   .top-bar-left
+    .menu
+      - if current_page?(root_path)
+        .menu-text BScan
+      - else
+        = link_to 'BScan', root_path
+  .top-bar-right
     %ul.menu
-      %li.menu-text BScan
       %li= link_to 'Products', products_path
       %li= link_to 'Ingredients', ingredients_path
       %li= link_to 'Anomalies', anomalies_path
