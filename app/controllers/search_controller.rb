@@ -1,12 +1,12 @@
 # app/controllers/search_controller
 class SearchController < ApplicationController
-  def by_ean
-    product = Product.find_by_ean(params[:ean]) || GrabService.by_ean(params[:ean])
-    redirect_to product
-  end
-
-  def by_name
-    @products = GrabService.by_name(params[:name])
+  def product_search
+    if params[:search].numeric?
+      product = Product.find_by_ean(params[:search]) || GrabService.by_ean(params[:search])
+      redirect_to product
+    else
+      @products = GrabService.by_name(params[:search])
+    end
   end
 
   def close_match

@@ -1,0 +1,13 @@
+%main#home.text-center
+  %h1 Search
+  %h2
+  = form_tag "/product_search", method: 'get' do
+    .input-group
+      = text_field_tag :search, params[:search], class: 'input-group-field', placeholder: 'Search by Name or EAN'
+      .input-group-button= submit_tag "Search", name: nil, class: 'button'
+
+  -# %h2 Search by name
+  -# = form_tag "/by_name", method: 'get' do
+  -#   .input-group
+  -#     = text_field_tag :name, params[:name], class: 'input-group-field'
+  -#     .input-group-button= submit_tag "Go", name: nil, class: 'button'

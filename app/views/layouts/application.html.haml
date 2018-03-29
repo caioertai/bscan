@@ -26,4 +26,4 @@
             = form_tag "/by_name", method: 'get' do
               = text_field_tag :name, params[:name], type: 'search', placeholder: 'Search by Name', class: 'input-group-field'
 
-    .grid-container.padded= yield
+    .grid-container= yield
