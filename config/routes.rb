@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
+  devise_for :admins, path: '', path_names: { sign_in: 'login', sign_out: 'logout' }
   resources :ingredients, :products
-  # resources :search
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  # Main routes
   root to: 'pages#home'
-  get '/close_match', to: 'search#close_match'
   get '/search', to: 'search#product_search'
+
+  # Admin Routes
+  get '/close_match', to: 'ingredients#close_match'
   get '/anomalies', to: 'products#anomalies'
 end

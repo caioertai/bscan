@@ -1,5 +1,6 @@
 # app/controllers/ingredients_controller.rb
 class IngredientsController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_ingredient, only: %i[show edit update destroy]
 
   # GET /ingredients
@@ -60,6 +61,19 @@ class IngredientsController < ApplicationController
       format.html { redirect_to ingredients_url, notice: 'Ingredient was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def close_match
+    # TODO: Make this a service (able to be called on base model) that runs through all of the same model
+    # as lev_search(attribute, max_distance) and matches them into a join table with the distance column
+    name_to_match = params[:name_to_match].downcase
+
+    matches = []
+    Ingredient.all.each.each do |ingredient|
+      similarity = SimilarityService.new(ingredient, name_to_match)
+      matches << similarity if similarity.rating > 50
+    end
+    @close_matches = matches.sort_by { |match| -match.rating }
   end
 
   private

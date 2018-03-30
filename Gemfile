@@ -44,6 +44,8 @@ gem 'money'
 gem 'httparty'
 gem 'nokogiri'
 
+gem 'devise'
+
 # Fuzzy match
 gem 'amatch' # note that you have to require this... fuzzy_match won't require it for you
 gem 'fuzzy_match'

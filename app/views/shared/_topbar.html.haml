@@ -5,8 +5,10 @@
         .menu-text BScan
       - else
         = link_to 'BScan', root_path
-  .top-bar-right
-    %ul.menu
-      %li= link_to 'Products', products_path
-      %li= link_to 'Ingredients', ingredients_path
-      %li= link_to 'Anomalies', anomalies_path
+  -if admin_signed_in?
+    .top-bar-right
+      %ul.menu
+        %li= link_to 'Products', products_path
+        %li= link_to 'Ingredients', ingredients_path
+        %li= link_to 'Anomalies', anomalies_path
+        %li= link_to 'Logout', destroy_admin_session_path, method: 'delete'
