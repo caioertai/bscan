@@ -1,6 +1,3 @@
-# require 'nokogiri'
-# require 'open-uri'
-
 # Service object
 class ParseService
   def self.ensure_types_of(item)
@@ -14,12 +11,12 @@ class ParseService
   end
 
   def self.parse_ean(product)
+    # TODO: Validate by starting with 789 and having 13 digits
     puts "Parsing #{product.name}"
     doc = Nokogiri::HTML(product.document)
     ean = doc.at('.presentation-offer-info__ean strong')
     product.ean = ean.nil? ? '' : ean.text.strip
     product.save
-    product.ean
   end
 
   def self.parse_brand(product)
@@ -27,9 +24,11 @@ class ParseService
     doc = Nokogiri::HTML(product.document)
     product_header = doc.search('.product-header__infos').last
     brand = product_header.at('.cr-icon-brand.product-block__meta-icon')
-    product.brand = brand.nil? ? '' : brand.parent.text.strip
+    return if brand.nil?
+    brand = brand.parent.text.strip
+
+    product.brand = Brand.find_by_name(brand) || Brand.create(name: brand)
     product.save
-    product.brand
   end
 
   def self.parse_factory(product)
@@ -39,7 +38,6 @@ class ParseService
     factory = product_header.at('.cr-icon-factory.product-block__meta-icon')
     product.factory = factory.nil? ? '' : factory.parent.text.strip
     product.save
-    product.factory
   end
 
   def self.parse_ingredients(product)
