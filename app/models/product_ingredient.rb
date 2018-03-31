@@ -5,7 +5,7 @@
 #   PRIMARY KEY (`id`)
 # );
 class ProductIngredient < ApplicationRecord
-  validates :formula_index, :ingredient_id, :product_id, presence: true
+  validates :ingredient_id, :product_id, presence: true
   belongs_to :product
   belongs_to :ingredient
 end
