@@ -20,6 +20,6 @@
         %tr
           %td= product.ean
           %td= link_to product.name, product
-          %td= product.brand
+          %td= product.brand.name if product.brand
           %td= product.factory
           %td.text-right= link_to 'Source', product.url
