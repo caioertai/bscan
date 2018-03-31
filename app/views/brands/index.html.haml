@@ -1,0 +1,10 @@
+%main.grid-container
+  %table
+    %thead.sticky
+      %th Name
+      %th Product
+    %tbody
+      - @brands.each do |brand|
+        %tr
+          %td= link_to brand.name, brand_path(brand)
+          %td= brand.products.count

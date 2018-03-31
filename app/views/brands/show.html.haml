@@ -1,0 +1,15 @@
+%main.grid-container
+  %h1= @brand.name
+  %table
+    %thead.sticky
+      %th EAN
+      %th Name
+      %th Factory
+      %th
+    %tbody
+      - @brand.products.each do |product|
+        %tr
+          %td= product.ean
+          %td= link_to product.name, product
+          %td= product.factory
+          %td.text-right= link_to 'Source', product.url
