@@ -1,37 +1,8 @@
 %main.grid-container
   %h1 Anomalies
   - @anomalies_list.each do |error, anomalies|
-    - if anomalies.first.is_a?(Ingredient)
-      %h2= error
-      %table
-        - attributes = [:id, :name]
-        %thead.sticky
-          - attributes.each do |attr|
-            %th= attr.capitalize
-          %th
-        %tbody
-          - anomalies.each do |anomaly|
-            %tr
-              - attributes.each do |attr|
-                %td
-                  = anomaly.send(attr.to_sym)
-              %td
-                = link_to 'Show', anomaly
-
-  - @anomalies_list.each do |error, anomalies|
-    - if anomalies.first.is_a?(Product)
-      %h2= error
-      %table
-        - attributes = [:id, :name, :ean]
-        %thead.sticky
-          - attributes.each do |attr|
-            %th= attr.capitalize
-          %th
-        %tbody
-          - anomalies.each do |anomaly|
-            %tr
-              - attributes.each do |attr|
-                %td
-                  = anomaly.send(attr.to_sym)
-              %td
-                = link_to 'Show', anomaly
+    %h2= error unless anomalies.empty?
+    = case anomalies.first
+      - when Ingredient then render 'ingredients/table', ingredients: anomalies
+      - when Product then render 'products/table', products: anomalies
+      - when Brand then render 'brands/table', products: anomalies

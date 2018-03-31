@@ -2,23 +2,5 @@
   %h1 Listing products
 
   .text-center= paginate @products
-
-  %table
-    %thead.sticky
-      %th EAN
-      %th Name
-      %th Brand
-      %th Factory
-      %th Ingredients
-      %th
-    %tbody
-      - @products.each do |product|
-        %tr
-          %td= product.ean
-          %td= link_to product.name, product
-          %td= product.brand.name if product.brand
-          %td= product.factory
-          %td.text-center= product.ingredients.empty? ? '' : 'Yes'
-          %td.text-right= link_to 'Source', product.url
-
+  = render 'products/table', products: @products
   .text-center= paginate @products

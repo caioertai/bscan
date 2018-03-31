@@ -1,0 +1,11 @@
+%table
+  %thead.sticky
+    %tr
+      %th Usage
+      %th Name
+
+  %tbody
+    - ingredients.sort_by { |ingredient| -ingredient.products.count }.each do |ingredient|
+      %tr
+        %td= ingredient.products.count
+        %td= link_to ingredient.name, ingredient
