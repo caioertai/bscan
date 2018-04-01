@@ -23,21 +23,6 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit; end
 
-  # GET /anomalies
-  def anomalies
-    anomalies = {}
-    # anomalies['Unclosed ()'] = Ingredient.where("name LIKE '%[%'")
-    anomalies['Is a one of'] = Ingredient.where("name LIKE '%\{%' OR '%\}%'")
-    anomalies['Has curly brackets'] = Ingredient.where("name LIKE '%\{%' OR '%\}%'")
-    anomalies['Has square brackets'] = Ingredient.where("name LIKE '%[%' OR '%]%'")
-    anomalies['Has parenthesis'] = Ingredient.where("name LIKE '%(%' OR '%)%'")
-    anomalies['Has dots'] = Ingredient.where("name LIKE '%.%'")
-    anomalies['Large formula item'] = Ingredient.where('LENGTH(name) > 50')
-    anomalies['EAN < 13'] = Product.where('LENGTH(ean) < 13')
-    anomalies['EAN > 13'] = Product.where('LENGTH(ean) > 13')
-    @anomalies_list = anomalies
-  end
-
   # POST /products
   # POST /products.json
   def create
