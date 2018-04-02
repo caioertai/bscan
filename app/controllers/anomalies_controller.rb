@@ -1,10 +1,10 @@
+# app/controllers/anomalies_controller.rb
 class AnomaliesController < ApplicationController
   before_action :authenticate_admin!
 
   # GET /anomalies
   def index
     anomalies = {}
-    anomalies['Is a one of'] = Ingredient.where("name LIKE '%\{%' OR '%\}%'")
     anomalies['Has curly brackets'] = Ingredient.where("name LIKE '%\{%' OR '%\}%'")
     anomalies['Has square brackets'] = Ingredient.where("name LIKE '%[%' OR '%]%'")
     anomalies['Has parenthesis'] = Ingredient.where("name LIKE '%(%' OR '%)%'")
@@ -15,7 +15,4 @@ class AnomaliesController < ApplicationController
     anomalies['EAN > 13'] = Product.where('LENGTH(ean) > 13')
     @anomalies_list = anomalies
   end
-
-  # def show
-  # end
 end

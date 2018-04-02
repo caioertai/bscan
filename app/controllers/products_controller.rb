@@ -1,6 +1,6 @@
 # app/controllers/search_controller
 class ProductsController < ApplicationController
-  before_action :authenticate_admin!, except: %i[show]
+  skip_before_action :authenticate_admin!, only: %i[show]
   before_action :set_product, only: %i[show edit update destroy]
 
   # GET /products

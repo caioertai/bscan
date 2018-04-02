@@ -7,7 +7,7 @@
 # );
 class Product < ApplicationRecord
   validates :name, presence: true
-  validates :name, uniqueness: true
+  validates :name, uniqueness: { scope: :ean }
   validates :ean, presence: true
 
   belongs_to :brand
@@ -18,7 +18,7 @@ class Product < ApplicationRecord
     "/product/#{ean}"
   end
 
-  (attribute_names + ['ingredients', 'brand']).each do |attribute|
+  (attribute_names + %w[ingredients brand]).each do |attribute|
     define_method :"parse_#{attribute}" do
       ParseService.send(:"parse_#{attribute}", self)
     end

@@ -1,6 +1,5 @@
 # app/controllers/ingredients_controller.rb
 class IngredientsController < ApplicationController
-  before_action :authenticate_admin!
   before_action :set_ingredient, only: %i[show edit update destroy]
 
   # GET /ingredients
